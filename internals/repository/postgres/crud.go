@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	"github.com/BigNutJaa/user-service/internals/utils"
+	"github.com/BigNutJaa/users/internals/utils"
 	"gorm.io/gorm"
 )
 

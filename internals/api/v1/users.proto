@@ -8,11 +8,11 @@ option go_package = "/.;api_v1";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
   info: {
-    title: "Users Service"
+    title: "Auten Service"
     version: "1.0"
     contact: {
       name: "blueprint-roa-golang-grpc-gateway"
-      url: "http://localhost:3011"
+      url: "http://localhost:3031"
       email: "chat@robowealth.co.th"
     }
   }
@@ -33,50 +33,47 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 };
 
 message Users {
-  string full_name = 1;
-  string address = 2;
-  string phone_number = 3;
-  string gender = 4;
-  int64 created_at = 6;
-  int64 updated_at = 7;
-  string created_by = 8;
-  string updated_by = 9;
+  string user_name = 1;
+  string password = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string email = 5;
+  string role_code = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
+  string created_by = 9;
+  string updated_by = 10;
 }
 
 message UsersCreateRequest {
-  // @inject_tag: validate:"required"
-  string first_name = 1;
-  // @inject_tag: validate:"required"
-  string last_name = 2;
-  string address = 3;
-  // @inject_tag: validate:"required"
-  string phone_number = 4;
-  // @inject_tag: validate:"required"
-  string gender = 5;
+  string user_name = 1;
+  string password = 2;
+  string first_name = 3;
+  string last_name = 4;
+  string email = 5;
+//  string role_code = 6;
+  // fix default to U02_R00 (input_role)
 }
 
 message UsersCreateResponse{
-  int32 id = 1;
+  string result = 1;
 }
 
 message UsersGetRequest {
-  string full_name = 1;
-  int32 id = 2;
+  string user_name = 1;
+  string password = 2;
 }
 
 message UsersGetResponse {
-  string full_name = 1;
-  string address = 3;
-  string phone_number = 4;
-  string gender = 5;
-  int32 id = 6;
+  string user_name = 1;
+  string password = 2;
 
 }
 
 message UsersListRequest {
-  string full_name = 1;
-  string phone_number =2;
-  string gender = 3;
+  string user_name = 1;
+  string first_name = 2;
+  string email = 3;
   int64 page = 4;
   int64 per_page = 5;
 
@@ -90,28 +87,22 @@ message UsersListResponse {
 
 }
 message UserListItem {
-  string full_name = 1;
-  string address = 3;
-  string phone_number = 4;
-  string gender = 5;
+  string user_name = 1;
+  string first_name = 2;
+  string email = 3;
   int32 id = 6;
 }
 
-service UsersService {
+service AutenService {
   rpc Create(UsersCreateRequest) returns (UsersCreateResponse) {
     option (google.api.http) = {
       post: "/api/v1/users"
-      body: "*",
+//      body: "*",
     };
   }
   rpc Get(UsersGetRequest) returns (UsersGetResponse) {
     option (google.api.http) = {
       get: "/api/v1/users"
-    };
-  }
-  rpc List(UsersListRequest) returns (UsersListResponse) {
-    option (google.api.http) = {
-      get: "/api/v1/users/list"
     };
   }
 }

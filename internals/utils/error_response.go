@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/BigNutJaa/user-service/internals/constants"
+	"github.com/BigNutJaa/users/internals/constants"
 
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"

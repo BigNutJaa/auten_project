@@ -8,8 +8,8 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/BigNutJaa/user-service/internals/config"
-	"github.com/BigNutJaa/user-service/internals/entity"
+	"github.com/BigNutJaa/users/internals/config"
+	"github.com/BigNutJaa/users/internals/entity"
 
 	"gorm.io/gorm/logger"
 
@@ -40,48 +40,8 @@ func (db *DB) Close() {
 func (db *DB) MigrateDB() {
 	log.Info("Start migrate db READ")
 
-	if !db.Connection.Migrator().HasTable(entity.Product{}.TableName()) {
-		err := db.Connection.AutoMigrate(&entity.Product{})
-
-		log.Error("Error :", err)
-	}
 	if !db.Connection.Migrator().HasTable(entity.Users{}.TableName()) {
 		err := db.Connection.AutoMigrate(&entity.Users{})
-
-		log.Println("Error :", err)
-	}
-	if !db.Connection.Migrator().HasTable(entity.Warehouse{}.TableName()) {
-		err := db.Connection.AutoMigrate(&entity.Warehouse{})
-
-		log.Println("Error :", err)
-	}
-	if !db.Connection.Migrator().HasTable(entity.Category{}.TableName()) {
-		err := db.Connection.AutoMigrate(&entity.Category{})
-
-		log.Println("Error :", err)
-	}
-	if !db.Connection.Migrator().HasTable(entity.Stock{}.TableName()) {
-		err := db.Connection.AutoMigrate(&entity.Stock{})
-
-		log.Println("Error :", err)
-	}
-	if !db.Connection.Migrator().HasTable(entity.Movie{}.TableName()) {
-		err := db.Connection.AutoMigrate(&entity.Movie{})
-
-		log.Println("Error :", err)
-	}
-	if !db.Connection.Migrator().HasTable(entity.Moving{}.TableName()) {
-		err := db.Connection.AutoMigrate(&entity.Moving{})
-
-		log.Println("Error :", err)
-	}
-	if !db.Connection.Migrator().HasTable(entity.Delta{}.TableName()) {
-		err := db.Connection.AutoMigrate(&entity.Delta{})
-
-		log.Println("Error :", err)
-	}
-	if !db.Connection.Migrator().HasTable(entity.Alpha{}.TableName()) {
-		err := db.Connection.AutoMigrate(&entity.Alpha{})
 
 		log.Println("Error :", err)
 	}

@@ -3,8 +3,8 @@ package controller
 import (
 	"context"
 
-	"github.com/BigNutJaa/user-service/internals/utils"
-	apiV1 "github.com/BigNutJaa/user-service/pkg/api/v1"
+	"github.com/BigNutJaa/users/internals/utils"
+	apiV1 "github.com/BigNutJaa/users/pkg/api/v1"
 )
 
 // PingPongController ...

@@ -1,7 +1,7 @@
 package users
 
 import (
-	"github.com/BigNutJaa/user-service/internals/service/users/wrapper"
+	"github.com/BigNutJaa/users/internals/service/users/wrapper"
 )
 
 type Controller struct {

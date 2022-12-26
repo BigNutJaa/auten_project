@@ -3,8 +3,8 @@ package grpcclient
 import (
 	log "github.com/sirupsen/logrus"
 
-	"github.com/BigNutJaa/user-service/internals/config"
-	apiV1 "github.com/BigNutJaa/user-service/pkg/api/v1"
+	"github.com/BigNutJaa/users/internals/config"
+	apiV1 "github.com/BigNutJaa/users/pkg/api/v1"
 
 	"google.golang.org/grpc"
 )

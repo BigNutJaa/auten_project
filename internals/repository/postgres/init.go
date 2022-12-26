@@ -1,6 +1,6 @@
 package postgres
 
-import "github.com/BigNutJaa/user-service/internals/infrastructure/database"
+import "github.com/BigNutJaa/users/internals/infrastructure/database"
 
 type PostgresRepository struct {
 	db *database.DB

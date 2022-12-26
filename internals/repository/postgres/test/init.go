@@ -5,10 +5,10 @@ package test
 
 import (
 	"context"
-	"github.com/BigNutJaa/user-service/internals/config"
-	"github.com/BigNutJaa/user-service/internals/entity"
-	"github.com/BigNutJaa/user-service/internals/infrastructure/database"
-	"github.com/BigNutJaa/user-service/internals/repository/postgres"
+	"github.com/BigNutJaa/users/internals/config"
+	"github.com/BigNutJaa/users/internals/entity"
+	"github.com/BigNutJaa/users/internals/infrastructure/database"
+	"github.com/BigNutJaa/users/internals/repository/postgres"
 	"github.com/stretchr/testify/suite"
 )
 

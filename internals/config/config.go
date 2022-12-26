@@ -7,14 +7,14 @@ import (
 
 type Configuration struct {
 	AppName    string `env:"APP_NAME" envDefault:"blueprint-roa-golang"`
-	Port       int    `env:"PORT" envDefault:"3010"`
-	HttpPort   int    `env:"HTTP_PORT" envDefault:"3011"`
+	Port       int    `env:"PORT" envDefault:"3030"`
+	HttpPort   int    `env:"HTTP_PORT" envDefault:"3031"`
 	Env        string `env:"ENV" envDefault:"localhost"`
 	DbDriver   string `env:"DB_DRIVER" envDefault:"postgres"`
 	DbHost     string `env:"DB_HOST" envDefault:"127.0.0.1"`
 	DbPort     string `env:"DB_PORT" envDefault:"5432"`
 	DbUser     string `env:"DB_USER" envDefault:"postgres"`
-	DbName     string `env:"DB_NAME" envDefault:"products"`
+	DbName     string `env:"DB_NAME" envDefault:"users"`
 	DbPassword string `env:"DB_PASSWORD" envDefault:"postgres"`
 	Jaeger     Jaeger
 }

@@ -1,40 +1,26 @@
 package container
 
 import (
-	controllerAlpha "github.com/BigNutJaa/user-service/internals/controller/alpha"
-	controllerDelta "github.com/BigNutJaa/user-service/internals/controller/delta"
-	controllerMovie "github.com/BigNutJaa/user-service/internals/controller/movie"
-	controllerMoving "github.com/BigNutJaa/user-service/internals/controller/moving"
-	"github.com/BigNutJaa/user-service/internals/service/alpha"
-	"github.com/BigNutJaa/user-service/internals/service/delta"
-	"github.com/BigNutJaa/user-service/internals/service/movie"
-	"github.com/BigNutJaa/user-service/internals/service/moving"
-	"github.com/BigNutJaa/user-service/internals/service/stock"
 	"net/http"
 
-	controllerUsers "github.com/BigNutJaa/user-service/internals/controller/users"
-	"github.com/BigNutJaa/user-service/internals/service/users"
+	controllerUsers "github.com/BigNutJaa/users/internals/controller/users"
+	"github.com/BigNutJaa/users/internals/service/users"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/robowealth-mutual-fund/shared-utility/validator"
 	log "github.com/sirupsen/logrus"
 	"go.uber.org/dig"
 
-	"github.com/BigNutJaa/user-service/internals/config"
-	"github.com/BigNutJaa/user-service/internals/controller"
-	controllerCategory "github.com/BigNutJaa/user-service/internals/controller/category"
-	controllerProduct "github.com/BigNutJaa/user-service/internals/controller/product"
-	controllerStock "github.com/BigNutJaa/user-service/internals/controller/stock"
-	warehouseController "github.com/BigNutJaa/user-service/internals/controller/warehouse"
-	"github.com/BigNutJaa/user-service/internals/infrastructure/database"
-	grpcServer "github.com/BigNutJaa/user-service/internals/infrastructure/grpcServer"
-	httpServer "github.com/BigNutJaa/user-service/internals/infrastructure/httpServer"
-	"github.com/BigNutJaa/user-service/internals/infrastructure/jaeger"
-	"github.com/BigNutJaa/user-service/internals/repository/postgres"
-	"github.com/BigNutJaa/user-service/internals/service/category"
-	serviceProduct "github.com/BigNutJaa/user-service/internals/service/product"
-	warehouseService "github.com/BigNutJaa/user-service/internals/service/warehouse"
-	"github.com/BigNutJaa/user-service/internals/utils"
-	"github.com/BigNutJaa/user-service/internals/utils/logrus"
+	"github.com/BigNutJaa/users/internals/config"
+	"github.com/BigNutJaa/users/internals/controller"
+
+	"github.com/BigNutJaa/users/internals/infrastructure/database"
+	grpcServer "github.com/BigNutJaa/users/internals/infrastructure/grpcServer"
+	httpServer "github.com/BigNutJaa/users/internals/infrastructure/httpServer"
+	"github.com/BigNutJaa/users/internals/infrastructure/jaeger"
+	"github.com/BigNutJaa/users/internals/repository/postgres"
+
+	"github.com/BigNutJaa/users/internals/utils"
+	"github.com/BigNutJaa/users/internals/utils/logrus"
 )
 
 type Container struct {
@@ -55,27 +41,11 @@ func (c *Container) Configure() error {
 		controller.NewHealthZController,
 		controller.NewPingPongController,
 		validator.NewCustomValidator,
-		controllerProduct.NewController,
-		serviceProduct.NewService,
 		postgres.NewRepository,
 		utils.NewUtils,
 		utils.NewCustomValidator,
-		category.NewService,
-		warehouseService.NewService,
 		users.NewService,
 		controllerUsers.NewController,
-		stock.NewService,
-		controllerStock.NewController,
-		movie.NewService,
-		moving.NewService,
-		delta.NewService,
-		alpha.NewService,
-		controllerAlpha.NewController,
-		controllerMovie.NewController,
-		controllerMoving.NewController,
-		controllerDelta.NewController,
-		controllerCategory.NewController,
-		warehouseController.NewController,
 	}
 	for _, service := range servicesConstructors {
 		if err := c.container.Provide(service); err != nil {

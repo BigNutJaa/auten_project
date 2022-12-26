@@ -3,7 +3,7 @@ package wrapper
 import (
 	"go.uber.org/dig"
 
-	service "github.com/BigNutJaa/user-service/internals/service/users"
+	service "github.com/BigNutJaa/users/internals/service/users"
 )
 
 type Wrapper struct {

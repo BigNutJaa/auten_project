@@ -6,7 +6,7 @@ package postgres_test
 import (
 	"testing"
 
-	"github.com/BigNutJaa/user-service/internals/repository/postgres/test"
+	"github.com/BigNutJaa/users/internals/repository/postgres/test"
 
 	"github.com/stretchr/testify/suite"
 )

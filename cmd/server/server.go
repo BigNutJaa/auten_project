@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/BigNutJaa/user-service/internals/container"
+	"github.com/BigNutJaa/users/internals/container"
 	log "github.com/sirupsen/logrus"
 )
 

@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/BigNutJaa/user-service/internals/constants"
-	vr "github.com/BigNutJaa/user-service/internals/utils/validator-rule"
+	"github.com/BigNutJaa/users/internals/constants"
+	vr "github.com/BigNutJaa/users/internals/utils/validator-rule"
 
 	"github.com/go-playground/locales/en"
 	ut "github.com/go-playground/universal-translator"

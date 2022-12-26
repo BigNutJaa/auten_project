@@ -3,34 +3,31 @@ package users
 import (
 	"context"
 
-	"github.com/BigNutJaa/user-service/internals/entity"
-	model "github.com/BigNutJaa/user-service/internals/model/users"
+	"github.com/BigNutJaa/users/internals/entity"
+	model "github.com/BigNutJaa/users/internals/model/users"
 )
 
-func (s *UsersService) Get(ctx context.Context, request *model.FitterReadUsers) (*model.ReadResponseUsers, error) {
+func (s *AutenService) Get(ctx context.Context, request *model.FitterReadUsers) (*model.ReadResponseUsers, error) {
 	makeFilter := s.makeFilterUsers(request)
 	users := &entity.Users{}
-
 	err := s.repository.Find(makeFilter, users)
 
 	return &model.ReadResponseUsers{
-		Id:          int32(users.ID),
-		FullName:    users.FullName,
-		Address:     users.Address,
-		PhoneNumber: users.PhoneNumber,
-		Gender:      users.Gender,
+		User_name: users.UserName,
+		Password:  users.Password,
 	}, err
 }
 
-func (s *UsersService) makeFilterUsers(filters *model.FitterReadUsers) (output map[string]interface{}) {
+func (s *AutenService) makeFilterUsers(filters *model.FitterReadUsers) (output map[string]interface{}) {
 	output = make(map[string]interface{})
 
-	if len(filters.FullName) > 0 {
-		output["full_name"] = filters.FullName
+	if len(filters.User_name) > 0 {
+		output["user_name"] = filters.User_name
 	}
-	if filters.Id > 0 {
-		output["id"] = filters.Id
+	if len(filters.Password) > 0 {
+		output["password"] = filters.Password
 	}
+
 	return output
 
 }
