@@ -11,7 +11,10 @@
   },
   "tags": [
     {
-      "name": "AutenService"
+      "name": "RegisterService"
+    },
+    {
+      "name": "LoginService"
     }
   ],
   "schemes": [
@@ -24,9 +27,52 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/users": {
+    "/api/v1/token/login": {
+      "post": {
+        "operationId": "LoginService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/api_v1TokenCreateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LoginService"
+        ]
+      }
+    },
+    "/api/v1/users/login": {
       "get": {
-        "operationId": "AutenService_Get",
+        "operationId": "RegisterService_Get",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -63,11 +109,13 @@
           }
         ],
         "tags": [
-          "AutenService"
+          "RegisterService"
         ]
-      },
+      }
+    },
+    "/api/v1/users/register": {
       "post": {
-        "operationId": "AutenService_Create",
+        "operationId": "RegisterService_Create",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -91,43 +139,49 @@
         },
         "parameters": [
           {
-            "name": "userName",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "firstName",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "lastName",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "email",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1UsersCreateRequest"
+            }
           }
         ],
         "tags": [
-          "AutenService"
+          "RegisterService"
         ]
       }
     }
   },
   "definitions": {
+    "api_v1TokenCreateResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string"
+        }
+      }
+    },
+    "api_v1UsersCreateRequest": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
     "api_v1UsersCreateResponse": {
       "type": "object",
       "properties": {
@@ -139,10 +193,7 @@
     "api_v1UsersGetResponse": {
       "type": "object",
       "properties": {
-        "userName": {
-          "type": "string"
-        },
-        "password": {
+        "result": {
           "type": "string"
         }
       }

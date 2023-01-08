@@ -1,9 +1,11 @@
 package container
 
 import (
+	controllerToken "github.com/BigNutJaa/users/internals/controller/token"
+	controllerUsers "github.com/BigNutJaa/users/internals/controller/users"
 	"net/http"
 
-	controllerUsers "github.com/BigNutJaa/users/internals/controller/users"
+	"github.com/BigNutJaa/users/internals/service/token"
 	"github.com/BigNutJaa/users/internals/service/users"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/robowealth-mutual-fund/shared-utility/validator"
@@ -45,7 +47,9 @@ func (c *Container) Configure() error {
 		utils.NewUtils,
 		utils.NewCustomValidator,
 		users.NewService,
+		token.NewService,
 		controllerUsers.NewController,
+		controllerToken.NewController,
 	}
 	for _, service := range servicesConstructors {
 		if err := c.container.Provide(service); err != nil {

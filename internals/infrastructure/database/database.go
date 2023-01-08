@@ -45,11 +45,25 @@ func (db *DB) MigrateDB() {
 
 		log.Println("Error :", err)
 	}
+	if !db.Connection.Migrator().HasTable(entity.Token{}.TableName()) {
+		err := db.Connection.AutoMigrate(&entity.Token{})
+
+		log.Println("Error :", err)
+	}
 }
 
 // NewServerBase is start connection database.
 func NewServerBase(env config.Configuration) *DB {
 	log.Info("start New serverBase")
+
+	//dsn := fmt.Sprintf(
+	//	os.Getenv("MYSQL_DNS"),
+	//	env.DbHost,
+	//	env.DbPort,
+	//	env.DbUser,
+	//	env.DbName,
+	//	env.DbPassword,
+	//)
 
 	dsn := fmt.Sprintf(
 		"host=%s port=%s user=%s dbname=%s password=%s sslmode=disable",

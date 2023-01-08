@@ -2,6 +2,7 @@ package httpServer
 
 import (
 	"context"
+	controllerToken "github.com/BigNutJaa/users/internals/controller/token"
 	"net/http"
 	"strconv"
 
@@ -17,16 +18,18 @@ type Server struct {
 	Server    *runtime.ServeMux
 	HttpMux   *http.ServeMux
 	UsersCtrl *controllerUsers.Controller
+	TokenCtrl *controllerToken.Controller
 }
 
 func (s *Server) Configure(ctx context.Context, opts []grpc.DialOption) {
 
-	apiV1.RegisterAutenServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.Port), opts)
-
+	apiV1.RegisterRegisterServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.Port), opts)
+	apiV1.RegisterLoginServiceHandlerFromEndpoint(ctx, s.Server, "0.0.0.0:"+strconv.Itoa(s.Config.Port), opts)
 }
 
 func NewServer(config config.Configuration, rmux *runtime.ServeMux, httpMux *http.ServeMux,
 	usersCtrl *controllerUsers.Controller,
+	tokenCtrl *controllerToken.Controller,
 
 ) *Server {
 	opts := []grpc.DialOption{grpc.WithInsecure()}
@@ -35,6 +38,7 @@ func NewServer(config config.Configuration, rmux *runtime.ServeMux, httpMux *htt
 		Server:    rmux,
 		HttpMux:   httpMux,
 		UsersCtrl: usersCtrl,
+		TokenCtrl: tokenCtrl,
 	}
 	s.Configure(context.Background(), opts)
 	return s

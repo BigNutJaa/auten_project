@@ -7,7 +7,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (s *AutenService) Create(ctx context.Context, request *model.Request) (string, error) {
+func (s *RegisterService) Create(ctx context.Context, request *model.Request) (string, error) {
 
 	// encrypt password
 	//encryptPass := StartEncrypt(request.Password)
@@ -43,7 +43,7 @@ func (s *AutenService) Create(ctx context.Context, request *model.Request) (stri
 	}
 }
 
-func (s *AutenService) makeFilterUserExist(filters string) (output map[string]interface{}) {
+func (s *RegisterService) makeFilterUserExist(filters string) (output map[string]interface{}) {
 	output = make(map[string]interface{})
 
 	if len(filters) > 0 {

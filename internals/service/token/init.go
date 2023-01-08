@@ -1,15 +1,15 @@
-package users
+package token
 
 import (
 	"github.com/BigNutJaa/users/internals/repository/postgres"
 )
 
-type RegisterService struct {
+type LoginService struct {
 	repository postgres.Repository
 }
 
 func NewService(r postgres.Repository) (service Service) {
-	return &RegisterService{
+	return &LoginService{
 		repository: r,
 	}
 }

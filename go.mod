@@ -7,8 +7,10 @@ require (
 	github.com/go-playground/locales v0.13.0
 	github.com/go-playground/universal-translator v0.17.0
 	github.com/go-playground/validator/v10 v10.4.1
+	github.com/golang-jwt/jwt/v4 v4.4.3
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.10.0
+	github.com/joho/godotenv v1.4.0
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/robowealth-mutual-fund/shared-utility v1.0.2
 	github.com/sirupsen/logrus v1.4.2

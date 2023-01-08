@@ -8,7 +8,7 @@ import (
 	"github.com/opentracing/opentracing-go"
 )
 
-func (wrp *Wrapper) Get(ctx context.Context, input *model.FitterReadUsers) (*model.ReadResponseUsers, error) {
+func (wrp *Wrapper) Get(ctx context.Context, input *model.FitterReadUsers) (string, error) {
 	sp, ctx := opentracing.StartSpanFromContext(ctx, "Service.Users.Get")
 	defer sp.Finish()
 

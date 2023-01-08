@@ -17,9 +17,10 @@ watch:
 pbgen:
 	protoc --proto_path=internals/api/v1 --go_out=plugins=grpc:pkg/grpc/health/v1 health.proto
 	protoc --proto_path=internals/api/v1 --go_out=plugins=grpc:pkg/api/v1 ping_pong.proto
-	protoc --proto_path=internals/api/v1 --proto_path=thirdparty --go_out=plugins=grpc:pkg/api/v1 --grpc-gateway_out=logtostderr=true:pkg/api/v1 --openapiv2_out=logtostderr=true,allow_merge=true,merge_file_name=api:swagger users.proto
+	protoc --proto_path=internals/api/v1 --proto_path=thirdparty --go_out=plugins=grpc:pkg/api/v1 --grpc-gateway_out=logtostderr=true:pkg/api/v1 --openapiv2_out=logtostderr=true,allow_merge=true,merge_file_name=api:swagger users.proto token.proto
 
 	protoc-go-inject-tag -input=pkg/api/v1/users.pb.go
+	protoc-go-inject-tag -input=pkg/api/v1/token.pb.go
 
 .PHONY: stringer
 stringer:

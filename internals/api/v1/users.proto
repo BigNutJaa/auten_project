@@ -65,8 +65,7 @@ message UsersGetRequest {
 }
 
 message UsersGetResponse {
-  string user_name = 1;
-  string password = 2;
+  string result = 1;
 
 }
 
@@ -93,16 +92,16 @@ message UserListItem {
   int32 id = 6;
 }
 
-service AutenService {
+service RegisterService {
   rpc Create(UsersCreateRequest) returns (UsersCreateResponse) {
     option (google.api.http) = {
-      post: "/api/v1/users"
-//      body: "*",
+      post: "/api/v1/users/register"
+      body: "*",
     };
   }
   rpc Get(UsersGetRequest) returns (UsersGetResponse) {
     option (google.api.http) = {
-      get: "/api/v1/users"
+      get: "/api/v1/users/login"
     };
   }
 }
