@@ -60,7 +60,7 @@ service LoginService {
   rpc Create(TokenCreateRequest) returns (TokenCreateResponse) {
     option (google.api.http) = {
       post: "/api/v1/token/login"
-//      body: "*",
+      body: "*",
     };
   }
 

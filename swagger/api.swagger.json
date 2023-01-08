@@ -53,16 +53,12 @@
         },
         "parameters": [
           {
-            "name": "userName",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1TokenCreateRequest"
+            }
           }
         ],
         "tags": [
@@ -154,6 +150,17 @@
     }
   },
   "definitions": {
+    "api_v1TokenCreateRequest": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
     "api_v1TokenCreateResponse": {
       "type": "object",
       "properties": {

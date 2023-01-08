@@ -6,16 +6,16 @@ import (
 	"github.com/BigNutJaa/users/internals/entity"
 	model "github.com/BigNutJaa/users/internals/model/token"
 	model2 "github.com/BigNutJaa/users/internals/model/users"
+	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
+	"os"
 )
+
+var hmacSampleSecret []byte
 
 func (s *LoginService) Create(ctx context.Context, request *model.Request) (string, error) {
 
-	// encrypt password
-	//encryptPass := StartEncrypt(request.Password)
-	//encryptPass, _ := bcrypt.GenerateFromPassword([]byte(request.Password), 10)
-
-	// check password matching
+	// where user&password
 	passwordLogin := request.Password
 	userLogin := request.User_name
 	checkMatching := s.makeFilterPasswordExist(request)
@@ -28,25 +28,30 @@ func (s *LoginService) Create(ctx context.Context, request *model.Request) (stri
 	databasePassword := resultCheck.Password
 	databaseUser := resultCheck.User_name
 
-	fmt.Println("login pass:", passwordLogin)
-	fmt.Println("database pass:", databasePassword)
-
-	//if passwordLogin == resultCheckPassword.Password {
+	// Compare login - database
 	errCompare := bcrypt.CompareHashAndPassword([]byte(databasePassword), []byte(passwordLogin))
 	if userLogin != databaseUser {
 		return "Login failed! :Username does not exist", nil
 
 	} else if errCompare == nil {
-		//hmacSampleSecret = []byte(os.Getenv("JWT_SECRET_KEY"))
-		//token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		//	"user_name": request.User_name,
-		//	//"nbf":       time.Date(2015, 10, 10, 12, 0, 0, 0, time.UTC).Unix(),
-		//})
-		//// Sign and get the complete encoded token as a string using the secret
-		//tokenString, err := token.SignedString(hmacSampleSecret)
-		//fmt.Println(tokenString, err)
+		hmacSampleSecret = []byte(os.Getenv("JWT_SECRET_KEY"))
+		//hmacSampleSecret = []byte("my_secret_key")
+		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+			"user_name": request.User_name,
+			//"nbf":       time.Date(2015, 10, 10, 12, 0, 0, 0, time.UTC).Unix(),
+		})
+		// Sign and get the complete encoded token as a string using the secret
+		tokenString, err := token.SignedString(hmacSampleSecret)
+		fmt.Println(tokenString, err)
 
-		return "Login success!", nil
+		input := &entity.Token{
+			UserName: userLogin,
+			Token:    tokenString,
+			Status:   "Active",
+		}
+		errx := s.repository.Create(input)
+
+		return "Login success!", errx
 
 	} else {
 		return "Login failed! : Password incorrect", nil
