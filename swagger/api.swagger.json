@@ -15,6 +15,9 @@
     },
     {
       "name": "LoginService"
+    },
+    {
+      "name": "ProductsService"
     }
   ],
   "schemes": [
@@ -27,6 +30,56 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/products": {
+      "post": {
+        "operationId": "ProductsService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/api_v1ProductsCreateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "detail",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "qty",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "ProductsService"
+        ]
+      }
+    },
     "/api/v1/token/login": {
       "post": {
         "operationId": "LoginService_Create",
@@ -53,12 +106,16 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/api_v1TokenCreateRequest"
-            }
+            "name": "userName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -92,12 +149,34 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/api_v1UsersCreateRequest"
-            }
+            "name": "userName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "firstName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "lastName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -107,13 +186,10 @@
     }
   },
   "definitions": {
-    "api_v1TokenCreateRequest": {
+    "api_v1ProductsCreateResponse": {
       "type": "object",
       "properties": {
-        "userName": {
-          "type": "string"
-        },
-        "password": {
+        "result": {
           "type": "string"
         }
       }
@@ -122,26 +198,6 @@
       "type": "object",
       "properties": {
         "result": {
-          "type": "string"
-        }
-      }
-    },
-    "api_v1UsersCreateRequest": {
-      "type": "object",
-      "properties": {
-        "userName": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        },
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "email": {
           "type": "string"
         }
       }

@@ -16,7 +16,7 @@ var hmacSampleSecret []byte
 
 func (s *LoginService) Create(ctx context.Context, request *model.Request) (string, error) {
 
-	// where user&password
+	// Find user&password from database
 	passwordLogin := request.Password
 	userLogin := request.User_name
 	checkMatching := s.makeFilterPasswordExist(request)
@@ -39,7 +39,7 @@ func (s *LoginService) Create(ctx context.Context, request *model.Request) (stri
 		//hmacSampleSecret = []byte("my_secret_key")
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 			"user_name": request.User_name,
-			"exp":       time.Now().Add(time.Minute * 1).Unix(),
+			"exp":       time.Now().Add(time.Minute * 2).Unix(),
 			//"nbf":       time.Date(2015, 10, 10, 12, 0, 0, 0, time.UTC).Unix(),
 		})
 		// Sign and get the complete encoded token as a string using the secret
@@ -57,20 +57,7 @@ func (s *LoginService) Create(ctx context.Context, request *model.Request) (stri
 
 	} else {
 		return "Login failed! : Password incorrect", nil
-		//input := &entity.Users{
-		//	UserName:  request.User_name,
-		//	Password:  string(encryptPass),
-		//	FirstName: request.First_name,
-		//	LastName:  request.Last_name,
-		//	Email:     request.Email,
-		//	RoleCode:  "U02_R00",
-		//}
 
-		//err := s.repository.Create(input)
-
-		//sp.LogKV("Repository result  :", err)
-
-		//return "User register successfully", err
 	}
 }
 

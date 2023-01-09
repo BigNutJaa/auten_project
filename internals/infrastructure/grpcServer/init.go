@@ -3,6 +3,7 @@ package grpcserver
 import (
 	"github.com/BigNutJaa/users/internals/config"
 	"github.com/BigNutJaa/users/internals/controller"
+	controllerProducts "github.com/BigNutJaa/users/internals/controller/products"
 	controllerToken "github.com/BigNutJaa/users/internals/controller/token"
 	controllerUsers "github.com/BigNutJaa/users/internals/controller/users"
 	apiV1 "github.com/BigNutJaa/users/pkg/api/v1"
@@ -19,6 +20,7 @@ type Server struct {
 	PingPongCtrl *controller.PingPongController
 	UsersCtrl    *controllerUsers.Controller
 	TokenCtrl    *controllerToken.Controller
+	ProductsCtrl *controllerProducts.Controller
 }
 
 // Configure ...
@@ -27,6 +29,7 @@ func (s *Server) Configure() {
 	apiV1.RegisterPingPongServiceServer(s.Server, s.PingPongCtrl)
 	apiV1.RegisterRegisterServiceServer(s.Server, s.UsersCtrl)
 	apiV1.RegisterLoginServiceServer(s.Server, s.TokenCtrl)
+	apiV1.RegisterProductsServiceServer(s.Server, s.ProductsCtrl)
 }
 
 func NewServer(
@@ -35,6 +38,7 @@ func NewServer(
 	pingPongCtrl *controller.PingPongController,
 	usersCtrl *controllerUsers.Controller,
 	tokenCtrl *controllerToken.Controller,
+	productsCtrl *controllerProducts.Controller,
 	validator *validatorUtils.CustomValidator,
 ) *Server {
 	option := grpc.ChainUnaryInterceptor(
@@ -49,6 +53,7 @@ func NewServer(
 		PingPongCtrl: pingPongCtrl,
 		UsersCtrl:    usersCtrl,
 		TokenCtrl:    tokenCtrl,
+		ProductsCtrl: productsCtrl,
 	}
 
 	s.Configure()

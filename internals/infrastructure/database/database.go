@@ -50,6 +50,11 @@ func (db *DB) MigrateDB() {
 
 		log.Println("Error :", err)
 	}
+	if !db.Connection.Migrator().HasTable(entity.Products{}.TableName()) {
+		err := db.Connection.AutoMigrate(&entity.Products{})
+
+		log.Println("Error :", err)
+	}
 }
 
 // NewServerBase is start connection database.
