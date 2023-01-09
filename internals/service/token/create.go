@@ -9,6 +9,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
 	"os"
+	"time"
 )
 
 var hmacSampleSecret []byte
@@ -38,6 +39,7 @@ func (s *LoginService) Create(ctx context.Context, request *model.Request) (stri
 		//hmacSampleSecret = []byte("my_secret_key")
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 			"user_name": request.User_name,
+			"exp":       time.Now().Add(time.Minute * 1).Unix(),
 			//"nbf":       time.Date(2015, 10, 10, 12, 0, 0, 0, time.UTC).Unix(),
 		})
 		// Sign and get the complete encoded token as a string using the secret

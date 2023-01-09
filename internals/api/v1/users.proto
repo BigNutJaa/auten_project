@@ -99,9 +99,5 @@ service RegisterService {
       body: "*",
     };
   }
-  rpc Get(UsersGetRequest) returns (UsersGetResponse) {
-    option (google.api.http) = {
-      get: "/api/v1/users/login"
-    };
-  }
+
 }

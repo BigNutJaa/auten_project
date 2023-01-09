@@ -66,49 +66,6 @@
         ]
       }
     },
-    "/api/v1/users/login": {
-      "get": {
-        "operationId": "RegisterService_Get",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/api_v1UsersGetResponse"
-            }
-          },
-          "404": {
-            "description": "Returned when the resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "userName",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RegisterService"
-        ]
-      }
-    },
     "/api/v1/users/register": {
       "post": {
         "operationId": "RegisterService_Create",
@@ -190,14 +147,6 @@
       }
     },
     "api_v1UsersCreateResponse": {
-      "type": "object",
-      "properties": {
-        "result": {
-          "type": "string"
-        }
-      }
-    },
-    "api_v1UsersGetResponse": {
       "type": "object",
       "properties": {
         "result": {
