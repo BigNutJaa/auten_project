@@ -9,6 +9,7 @@ import (
 )
 
 func (c *Controller) Create(ctx context.Context, request *apiV1.ProductsCreateRequest) (*apiV1.ProductsCreateResponse, error) {
+
 	span, ctx := opentracing.StartSpanFromContextWithTracer(
 		ctx,
 		opentracing.GlobalTracer(),
@@ -20,6 +21,7 @@ func (c *Controller) Create(ctx context.Context, request *apiV1.ProductsCreateRe
 		Name:   request.GetName(),
 		Detail: request.GetDetail(),
 		Qty:    request.GetQty(),
+		Token:  request.GetToken(),
 	})
 	//First_name: request.GetFirstName(),
 

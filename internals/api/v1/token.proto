@@ -54,14 +54,41 @@ message TokenCreateResponse{
   string result = 1;
 }
 
+message TokenGetRequest {
+  string tokenLogout = 1;
 
+}
+
+message TokenGetResponse{
+  string result = 1;
+}
+
+message TokenUpdateRequest {
+  string logoutRequest = 1;
+
+}
+
+message TokenUpdateResponse{
+  string result = 1;
+
+}
 
 service LoginService {
   rpc Create(TokenCreateRequest) returns (TokenCreateResponse) {
     option (google.api.http) = {
       post: "/api/v1/token/login"
-//      body: "*",
+      body: "*",
     };
   }
+  rpc Get(TokenGetRequest) returns (TokenGetResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/token/logout"
+    };
+  }
+//  rpc Update(TokenUpdateRequest) returns (TokenUpdateResponse) {
+//    option (google.api.http) = {
+//      patch: "/api/v1/token/logout2"
+//    };
+//  }
 
 }

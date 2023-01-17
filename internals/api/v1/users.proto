@@ -96,7 +96,7 @@ service RegisterService {
   rpc Create(UsersCreateRequest) returns (UsersCreateResponse) {
     option (google.api.http) = {
       post: "/api/v1/users/register"
-//      body: "*",
+      body: "*",
     };
   }
 

@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+
 	// add load .env for token
 	err := godotenv.Load(".env")
 	if err != nil {

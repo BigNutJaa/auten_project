@@ -46,6 +46,7 @@ message ProductsCreateRequest {
   string name = 1;
   string detail = 2;
   int32 qty = 3;
+  string token = 4;
 }
 
 message ProductsCreateResponse{
@@ -57,7 +58,7 @@ service ProductsService {
   rpc Create(ProductsCreateRequest) returns (ProductsCreateResponse) {
     option (google.api.http) = {
       post: "/api/v1/products"
-//      body: "*",
+      body: "*",
     };
   }
 

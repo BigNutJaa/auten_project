@@ -56,23 +56,12 @@
         },
         "parameters": [
           {
-            "name": "name",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "detail",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "qty",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1ProductsCreateRequest"
+            }
           }
         ],
         "tags": [
@@ -106,13 +95,46 @@
         },
         "parameters": [
           {
-            "name": "userName",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1TokenCreateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LoginService"
+        ]
+      }
+    },
+    "/api/v1/token/logout": {
+      "get": {
+        "operationId": "LoginService_Get",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/api_v1TokenGetResponse"
+            }
           },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
           {
-            "name": "password",
+            "name": "tokenLogout",
             "in": "query",
             "required": false,
             "type": "string"
@@ -149,34 +171,12 @@
         },
         "parameters": [
           {
-            "name": "userName",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "firstName",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "lastName",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "email",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1UsersCreateRequest"
+            }
           }
         ],
         "tags": [
@@ -186,6 +186,24 @@
     }
   },
   "definitions": {
+    "api_v1ProductsCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "qty": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    },
     "api_v1ProductsCreateResponse": {
       "type": "object",
       "properties": {
@@ -194,10 +212,49 @@
         }
       }
     },
+    "api_v1TokenCreateRequest": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
     "api_v1TokenCreateResponse": {
       "type": "object",
       "properties": {
         "result": {
+          "type": "string"
+        }
+      }
+    },
+    "api_v1TokenGetResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string"
+        }
+      }
+    },
+    "api_v1UsersCreateRequest": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
           "type": "string"
         }
       }

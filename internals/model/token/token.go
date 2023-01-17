@@ -6,7 +6,14 @@ type Request struct {
 }
 
 type ReadResponseToken struct {
-	Id        int32
 	User_name string
 	Token     string
+}
+
+type FitterUpdateToken struct {
+	LogoutRequest string
+}
+
+type FitterReadToken struct {
+	TokenLogout string
 }
