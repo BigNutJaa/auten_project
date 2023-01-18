@@ -31,19 +31,23 @@ func (s *ProductsService) Update(ctx context.Context, request *model.FitterUpdat
 		fmt.Println("User in use :", claims["user_name"], claims["role_code"])
 
 		makeFilter := s.makeFilterProductsUpdate(request)
-		stockUpdate := &entity.Products{
-			Qty: request.QtyUpdate,
+		productUpdate := &entity.Products{
+			Name:   request.Name,
+			Detail: request.Detail,
+			Qty:    request.QtyUpdate,
 		}
-		err := s.repository.Update(makeFilter, stockUpdate)
+		err := s.repository.Update(makeFilter, productUpdate)
 
 		updateReturn, _ := &model.UpdateResponseProducts{
-			Name:   stockUpdate.Name,
-			Detail: stockUpdate.Detail,
-			Qty:    stockUpdate.Qty,
-			Id:     int32(stockUpdate.ID),
+			Name:   productUpdate.Name,
+			Detail: productUpdate.Detail,
+			Qty:    productUpdate.Qty,
+			Id:     int32(productUpdate.ID),
 		}, err
 		v := Int32toString(updateReturn.Qty)
-		w := "Update success. new qty = " + v
+		x := updateReturn.Name
+		z := updateReturn.Detail
+		w := "Update success. " + " Name:" + x + " / Detail:" + z + " / New qty = " + v
 		return w, err
 
 	} else {
