@@ -53,11 +53,29 @@ message ProductsCreateResponse{
   string result = 1;
 }
 
+message ProductsUpdateRequest {
+  string name = 1;
+  string detail = 2;
+  int32 qtyUpdate = 3;
+  int32  id = 4;
+}
+
+message ProductsUpdateResponse{
+  string result = 1;
+
+
+}
 
 service ProductsService {
   rpc Create(ProductsCreateRequest) returns (ProductsCreateResponse) {
     option (google.api.http) = {
       post: "/api/v1/products"
+      body: "*",
+    };
+  }
+  rpc Update(ProductsUpdateRequest) returns (ProductsUpdateResponse) {
+    option (google.api.http) = {
+      patch: "/api/v1/products"
       body: "*",
     };
   }

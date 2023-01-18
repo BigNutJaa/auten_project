@@ -7,10 +7,9 @@ import (
 	model "github.com/BigNutJaa/users/internals/model/products"
 	"github.com/golang-jwt/jwt/v4"
 	"os"
-	"strconv"
 )
 
-func (s *ProductsService) Create(ctx context.Context, request *model.Request) (string, error) {
+func (s *ProductsService) Update(ctx context.Context, request *model.FitterUpdateProducts) (string, error) {
 
 	//check token before POST
 	hmacSampleSecret := []byte(os.Getenv("JWT_SECRET_KEY"))
@@ -30,15 +29,22 @@ func (s *ProductsService) Create(ctx context.Context, request *model.Request) (s
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		fmt.Println("User in use :", claims["user_name"], claims["role_code"])
-		input := &entity.Products{
-			Name:   request.Name,
-			Detail: request.Detail,
-			Qty:    request.Qty,
-		}
-		errx := s.repository.Create(input)
 
-		postSuccess := "Post success, ID:" + strconv.Itoa(input.ID)
-		return postSuccess, errx
+		makeFilter := s.makeFilterProductsUpdate(request)
+		stockUpdate := &entity.Products{
+			Qty: request.QtyUpdate,
+		}
+		err := s.repository.Update(makeFilter, stockUpdate)
+
+		updateReturn, _ := &model.UpdateResponseProducts{
+			Name:   stockUpdate.Name,
+			Detail: stockUpdate.Detail,
+			Qty:    stockUpdate.Qty,
+			Id:     int32(stockUpdate.ID),
+		}, err
+		v := Int32toString(updateReturn.Qty)
+		w := "Update success. new qty = " + v
+		return w, err
 
 	} else {
 		makeFilterEXP := s.makeFilterToken(tokenString)
@@ -49,4 +55,19 @@ func (s *ProductsService) Create(ctx context.Context, request *model.Request) (s
 		fmt.Println("Re-check err wording", err)
 		return "Token is expired", errz
 	}
+}
+
+func (s *ProductsService) makeFilterProductsUpdate(filters *model.FitterUpdateProducts) (output map[string]interface{}) {
+	output = make(map[string]interface{})
+
+	if len(filters.Name) > 0 {
+		output["name"] = filters.Name
+	}
+	if len(filters.Detail) > 0 {
+		output["detail"] = filters.Detail
+	}
+	if filters.Id > 0 {
+		output["id"] = filters.Id
+	}
+	return output
 }

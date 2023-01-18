@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-func (c *Controller) Create(ctx context.Context, request *apiV1.ProductsCreateRequest) (*apiV1.ProductsCreateResponse, error) {
+func (c *Controller) Update(ctx context.Context, request *apiV1.ProductsUpdateRequest) (*apiV1.ProductsUpdateResponse, error) {
 
 	md, _ := metadata.FromIncomingContext(ctx)
 	tokenx := md.Get("token")
@@ -16,20 +16,20 @@ func (c *Controller) Create(ctx context.Context, request *apiV1.ProductsCreateRe
 	span, ctx := opentracing.StartSpanFromContextWithTracer(
 		ctx,
 		opentracing.GlobalTracer(),
-		"handler.Products.Create",
+		"handler.products.Update",
 	)
-
 	defer span.Finish()
 	span.LogKV("Input Handler", request)
-	id, err := c.service.Create(ctx, &model.Request{
-		Name:   request.GetName(),
-		Detail: request.GetDetail(),
-		Qty:    request.GetQty(),
-		Token:  tokenx[0],
+	productsData, err := c.service.Update(ctx, &model.FitterUpdateProducts{
+		Name:      request.GetName(),
+		Detail:    request.GetDetail(),
+		Id:        request.GetId(),
+		QtyUpdate: request.GetQtyUpdate(),
+		Token:     tokenx[0],
 	})
 
 	if err != nil {
 		return nil, err
 	}
-	return &apiV1.ProductsCreateResponse{Result: string(id)}, nil
+	return &apiV1.ProductsUpdateResponse{Result: string(productsData)}, nil
 }

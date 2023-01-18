@@ -67,6 +67,43 @@
         "tags": [
           "ProductsService"
         ]
+      },
+      "patch": {
+        "operationId": "ProductsService_Update",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/api_v1ProductsUpdateResponse"
+            }
+          },
+          "404": {
+            "description": "Returned when the resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api_v1ProductsUpdateRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ProductsService"
+        ]
       }
     },
     "/api/v1/token/login": {
@@ -205,6 +242,33 @@
       }
     },
     "api_v1ProductsCreateResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string"
+        }
+      }
+    },
+    "api_v1ProductsUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "qtyUpdate": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "api_v1ProductsUpdateResponse": {
       "type": "object",
       "properties": {
         "result": {
