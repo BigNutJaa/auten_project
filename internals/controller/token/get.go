@@ -5,9 +5,12 @@ import (
 	model "github.com/BigNutJaa/users/internals/model/token"
 	apiV1 "github.com/BigNutJaa/users/pkg/api/v1"
 	"github.com/opentracing/opentracing-go"
+	"google.golang.org/grpc/metadata"
 )
 
 func (c *Controller) Get(ctx context.Context, request *apiV1.TokenGetRequest) (*apiV1.TokenGetResponse, error) {
+	md, _ := metadata.FromIncomingContext(ctx)
+	tokenx := md.Get("token")
 	span, ctx := opentracing.StartSpanFromContextWithTracer(
 		ctx,
 		opentracing.GlobalTracer(),
@@ -16,7 +19,7 @@ func (c *Controller) Get(ctx context.Context, request *apiV1.TokenGetRequest) (*
 	defer span.Finish()
 	span.LogKV("Input Handler", request)
 	tokenDatas, err := c.service.Get(ctx, &model.FitterReadToken{
-		TokenLogout: request.GetTokenLogout(),
+		TokenLogout: tokenx[0],
 	})
 
 	if err != nil {

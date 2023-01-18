@@ -7,6 +7,7 @@ import (
 )
 
 func (s *LoginService) Get(ctx context.Context, request *model.FitterReadToken) (string, error) {
+
 	makeFilter := s.makeFilterToken(request)
 	token := &entity.Token{}
 	err := s.repository.Find(makeFilter, token)
