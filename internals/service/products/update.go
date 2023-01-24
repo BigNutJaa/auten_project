@@ -29,26 +29,31 @@ func (s *ProductsService) Update(ctx context.Context, request *model.FitterUpdat
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		fmt.Println("User in use :", claims["user_name"], claims["role_code"])
+		user_role := claims["role_code"]
 
-		makeFilter := s.makeFilterProductsUpdate(request)
-		productUpdate := &entity.Products{
-			Name:   request.Name,
-			Detail: request.Detail,
-			Qty:    request.QtyUpdate,
+		if CheckRoleUpdate(user_role) == true {
+			makeFilter := s.makeFilterProductsUpdate(request)
+			productUpdate := &entity.Products{
+				Name:   request.Name,
+				Detail: request.Detail,
+				Qty:    request.QtyUpdate,
+			}
+			err := s.repository.Update(makeFilter, productUpdate)
+
+			updateReturn, _ := &model.UpdateResponseProducts{
+				Name:   productUpdate.Name,
+				Detail: productUpdate.Detail,
+				Qty:    productUpdate.Qty,
+				Id:     int32(productUpdate.ID),
+			}, err
+			v := Int32toString(updateReturn.Qty)
+			x := updateReturn.Name
+			z := updateReturn.Detail
+			w := "Update success. " + " Name:" + x + " / Detail:" + z + " / New qty = " + v
+			return w, err
+		} else {
+			return "You have no permission to process", nil
 		}
-		err := s.repository.Update(makeFilter, productUpdate)
-
-		updateReturn, _ := &model.UpdateResponseProducts{
-			Name:   productUpdate.Name,
-			Detail: productUpdate.Detail,
-			Qty:    productUpdate.Qty,
-			Id:     int32(productUpdate.ID),
-		}, err
-		v := Int32toString(updateReturn.Qty)
-		x := updateReturn.Name
-		z := updateReturn.Detail
-		w := "Update success. " + " Name:" + x + " / Detail:" + z + " / New qty = " + v
-		return w, err
 
 	} else {
 		makeFilterEXP := s.makeFilterToken(tokenString)

@@ -9,5 +9,6 @@ import (
 type Service interface {
 	Create(ctx context.Context, input *model.Request) (ID string, err error)
 	Update(ctx context.Context, request *model.FitterUpdateProducts) (ID string, err error)
+	//Delete(ctx context.Context, input *model.FitterDeleteProducts) (ID string, err error)
 	//Get(ctx context.Context, request *model.FitterReadUsers) (string, error)
 }

@@ -62,9 +62,8 @@ message ProductsUpdateRequest {
 
 message ProductsUpdateResponse{
   string result = 1;
-
-
 }
+
 
 service ProductsService {
   rpc Create(ProductsCreateRequest) returns (ProductsCreateResponse) {
@@ -79,5 +78,6 @@ service ProductsService {
       body: "*",
     };
   }
+
 
 }

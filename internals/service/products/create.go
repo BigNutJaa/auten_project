@@ -30,15 +30,21 @@ func (s *ProductsService) Create(ctx context.Context, request *model.Request) (s
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		fmt.Println("User in use :", claims["user_name"], claims["role_code"])
-		input := &entity.Products{
-			Name:   request.Name,
-			Detail: request.Detail,
-			Qty:    request.Qty,
-		}
-		errx := s.repository.Create(input)
+		user_role := claims["role_code"]
 
-		postSuccess := "Post success, ID:" + strconv.Itoa(input.ID)
-		return postSuccess, errx
+		if CheckRoleCreate(user_role) == true {
+			input := &entity.Products{
+				Name:   request.Name,
+				Detail: request.Detail,
+				Qty:    request.Qty,
+			}
+			errx := s.repository.Create(input)
+
+			postSuccess := "Post success, ID:" + strconv.Itoa(input.ID)
+			return postSuccess, errx
+		} else {
+			return "You have no permission to process", nil
+		}
 
 	} else {
 		makeFilterEXP := s.makeFilterToken(tokenString)

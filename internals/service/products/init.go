@@ -42,3 +42,21 @@ func Int32toString(n int32) string {
 		}
 	}
 }
+
+func CheckRoleCreate(role interface{}) bool {
+	if role == "U02_R00" {
+		return true
+	} else if role == "U02_R01" {
+		return true
+	} else {
+		return false
+	}
+}
+
+func CheckRoleUpdate(role interface{}) bool {
+	if role == "U02_R01" {
+		return true
+	} else {
+		return false
+	}
+}
